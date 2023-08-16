@@ -1,0 +1,24 @@
+.search-bar {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar div {
+    color: white;
+    height: 20px;
+    padding: 10px;
+    border-radius: 10px 0 0 10px;
+    background-color: darkgoldenrod;
+    font-weight: bold;
+}
+
+.search-bar input {
+    height: 20px;
+    width: 50%;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 0 10px 10px 0;
+}

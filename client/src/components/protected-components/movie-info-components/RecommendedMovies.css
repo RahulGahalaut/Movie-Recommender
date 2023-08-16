@@ -1,0 +1,32 @@
+.recommended-movies-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recommended-movies {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.recommended-movies-container h2 {
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+}
+
+.recommended-movies-container button {
+    min-width: 60px;
+    padding: 5px 10px;
+    margin: 10px;
+    font-weight: bold;
+    border: none;
+}
+
+.recommended-movies-container button:not(:disabled):hover {
+    background-color: black;
+    cursor: pointer;
+    outline: 0.5px solid;
+    color: white;
+}

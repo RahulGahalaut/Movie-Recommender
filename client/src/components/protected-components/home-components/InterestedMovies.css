@@ -1,0 +1,30 @@
+.search-result-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.search-result-container h2 {
+    margin-top: 0;
+    color: white;
+}
+
+
+.search-result-container button {
+    min-width: 60px;
+    padding: 5px 10px;
+    margin: 10px;
+    font-weight: bold;
+    border: none;
+}
+
+.search-result-container button:not(:disabled):hover {
+    background-color: black;
+    cursor: pointer;
+    outline: 0.5px solid;
+    color: white;
+}
+
+/*.movies style has already been defined by SearchResults.css*/

@@ -1,0 +1,71 @@
+.recommended-and-movie-info-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.movie-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+
+}
+
+.movie-container .movie-info-poster-wrapper {
+    height: 500px;
+    width: 900px;
+    display: flex;
+    box-shadow: 0 0 2px 0px white;
+}
+
+.movie-info-poster-wrapper .movie-poster-container {
+    width: 340px;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.movie-info-poster-wrapper .movie-info-container {
+    width: 540px;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+
+}
+
+.movie-info-container .movie-genres {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.movie-genre {
+    background-color: red;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.movie-info-container>div:last-of-type {
+    margin-top: 10px
+}
+
+.movie-homepage {
+    display: inline;
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border: 1px solid white;
+}
+
+.movie-homepage:hover {
+    background-color: green;
+}
