@@ -48,6 +48,7 @@ const RegisterPage = () => {
                 interests: interests
             });
             const token = response.data['token'];
+            console.log(token)
             localStorage.setItem('token', token)
             if (rememberMe) {
                 localStorage.setItem('rememberedCredentials', JSON.stringify({ email, password }));

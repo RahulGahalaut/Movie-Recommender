@@ -39,8 +39,11 @@ TMDB_HEADERS = {
 @app.route('/users/register', methods=['POST'])
 def register():
     try:
+        print("----request received----")
         data = request.json
         existing_user = User.query.filter_by(email=data['email']).first()
+        print("----existing user:", existing_user)
+
         if existing_user:
             return jsonify({"message": "User already exists"}), 409
 
@@ -48,14 +51,23 @@ def register():
             data['password'].encode('utf-8'), bcrypt.gensalt())
         new_user = User(name=data['name'], email=data['email'],
                         password=hashed_password, interests=data['interests'])
+
+        print("----user created----")
+
         db.session.add(new_user)
+        print("----user saved----")
+
         db.session.commit()
+        print("----user commited----")
+
         expires = datetime.timedelta(days=30)
         access_token = create_access_token(
             identity=new_user.id, expires_delta=expires)
         return jsonify({"token": access_token}), 201
     except:
-        return jsonify({"message": "Internal server error"})
+        print("----error raised----")
+
+        return jsonify({"message": "Internal server error"}), 500
 
 
 # Login route
@@ -146,6 +158,7 @@ def interested_movies():
 
 
 with app.app_context():
+    print("----creating database----")
     db.create_all()
 
 if __name__ == '__main__':
