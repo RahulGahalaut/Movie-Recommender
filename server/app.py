@@ -52,7 +52,7 @@ def register():
         new_user = User(name=data['name'], email=data['email'],
                         password=hashed_password, interests=data['interests'])
 
-        print("----user created----")
+        print("----user created----:", new_user)
 
         db.session.add(new_user)
         print("----user saved----")
