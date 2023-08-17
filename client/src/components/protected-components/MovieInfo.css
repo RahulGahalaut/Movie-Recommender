@@ -71,7 +71,7 @@
     background-color: green;
 }
 
-@media (max-width:768px) {
+@media (max-width:900px) {
     .movie-container .movie-info-poster-wrapper {
         height: 100%;
         width: 100%;

@@ -96,3 +96,17 @@
     padding: 5px;
     border-radius: 5px;
 }
+
+@media (max-width:768px) {
+    .register-form-container {
+        width: 80%;
+    }
+
+    .register-form-container form {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+    }
+}

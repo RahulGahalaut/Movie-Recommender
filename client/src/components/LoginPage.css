@@ -95,3 +95,17 @@
     padding: 5px;
     border-radius: 5px;
 }
+
+@media (max-width:768px) {
+    .login-form-container {
+        width: 80%;
+    }
+
+    .login-form-container form {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+    }
+}
