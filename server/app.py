@@ -145,7 +145,8 @@ def interested_movies():
         return jsonify({"message": "Internal server error"}), 500
 
 
+with app.app_context():
+    db.create_all()
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        app.run(port=os.environ['PORT'], debug=True)
+    app.run(port=os.environ['PORT'], debug=True)
