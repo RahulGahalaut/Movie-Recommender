@@ -64,8 +64,9 @@ def register():
         access_token = create_access_token(
             identity=new_user.id, expires_delta=expires)
         return jsonify({"token": access_token}), 201
-    except:
+    except Exception as e:
         print("----error raised----")
+        print(e)
 
         return jsonify({"message": "Internal server error"}), 500
 
