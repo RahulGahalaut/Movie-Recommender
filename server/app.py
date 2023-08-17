@@ -25,7 +25,7 @@ class User(db.Model):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    interests = db.Column(db.JSON)
+    interests = db.Column(db.String(200))
 
 
 TMDB_HEADERS = {
@@ -50,7 +50,7 @@ def register():
         hashed_password = bcrypt.hashpw(
             data['password'].encode('utf-8'), bcrypt.gensalt())
         new_user = User(name=data['name'], email=data['email'],
-                        password=hashed_password, interests=data['interests'])
+                        password=hashed_password, interests='|'.join(data['interests']))
 
         print("----user created----:", new_user)
 
@@ -148,7 +148,7 @@ def interested_movies():
         page = request.args.get('page')
         current_user_id = get_jwt_identity()
         user = User.query.get(current_user_id)
-        genres = '|'.join(user.interests)
+        genres = user.interests
         print(genres)
         url = url = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page={}&sort_by=popularity.desc&with_genres={}".format(page,
                                                                                                                                                                                genres)
