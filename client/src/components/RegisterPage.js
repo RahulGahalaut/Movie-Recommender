@@ -57,6 +57,9 @@ const RegisterPage = () => {
             }
         }
         catch (err) {
+            if (err.response?.data) {
+                alert(err.response.data?.message)
+            }
             console.error("Error is:", err)
         }
         finally {

@@ -30,11 +30,10 @@ header {
     min-width: 80px;
     text-decoration: none;
     color: grey;
-    margin: 0 10px;
     padding: 10px;
     border: 0.5px solid;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     transition: background-color 0.2s linear;
 }
 
@@ -86,4 +85,10 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width:768px) {
+    .navbar {
+        width: 90%;
+    }
 }

@@ -44,6 +44,9 @@ const LoginPage = () => {
         }
 
         catch (err) {
+            if (err.response?.data) {
+                alert(err.response.data?.message)
+            }
             console.error("error is:", err);
         }
         finally {
