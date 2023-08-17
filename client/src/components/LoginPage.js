@@ -81,7 +81,7 @@ const LoginPage = () => {
                                 </label>
                             </div>
                             <button type="submit"><b>LOGIN</b></button>
-                            <div>new to myApp? <NavLink to='/register'>Register</NavLink></div>
+                            <div>new here? <NavLink to='/register'>Register</NavLink></div>
                         </form>
                     </div>
                 )
