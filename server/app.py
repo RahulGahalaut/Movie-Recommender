@@ -7,6 +7,8 @@ import bcrypt
 import os
 import requests
 import datetime
+import binascii
+
 
 load_dotenv()
 app = Flask(__name__)
@@ -22,10 +24,10 @@ jwt = JWTManager(app)
 # User model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-    interests = db.Column(db.String(200))
+    name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), unique=True, nullable=False)
+    password = db.Column(db.LargeBinary, nullable=False)
+    interests = db.Column(db.JSON)
 
 
 TMDB_HEADERS = {
@@ -39,35 +41,23 @@ TMDB_HEADERS = {
 @app.route('/users/register', methods=['POST'])
 def register():
     try:
-        print("----request received----")
         data = request.json
         existing_user = User.query.filter_by(email=data['email']).first()
-        print("----existing user:", existing_user)
-
         if existing_user:
             return jsonify({"message": "User already exists"}), 409
 
         hashed_password = bcrypt.hashpw(
             data['password'].encode('utf-8'), bcrypt.gensalt())
         new_user = User(name=data['name'], email=data['email'],
-                        password=hashed_password, interests='|'.join(data['interests']))
-
-        print("----user created----:", new_user)
-
+                        password=hashed_password, interests=data['interests'])
         db.session.add(new_user)
-        print("----user saved----")
-
         db.session.commit()
-        print("----user commited----")
-
         expires = datetime.timedelta(days=30)
         access_token = create_access_token(
             identity=new_user.id, expires_delta=expires)
         return jsonify({"token": access_token}), 201
     except Exception as e:
-        print("----error raised----")
         print(e)
-
         return jsonify({"message": "Internal server error"}), 500
 
 
@@ -76,7 +66,6 @@ def register():
 def login():
     try:
         data = request.json
-        print(request.json)
         user = User.query.filter_by(email=data['email']).first()
         if user and bcrypt.checkpw(data['password'].encode('utf-8'), user.password):
             expires = datetime.timedelta(days=30)
@@ -85,7 +74,8 @@ def login():
             return jsonify({"token": access_token}), 200
         else:
             return jsonify({"message": "Invalid credentials"}), 401
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({"message": "Internal server error"}), 500
 
 
@@ -95,7 +85,8 @@ def get_genres():
         url = "https://api.themoviedb.org/3/genre/movie/list?language=en"
         response = requests.get(url, headers=TMDB_HEADERS)
         return jsonify(response.json()), 200
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({"message": "Internal server error"}), 500
 
 
@@ -110,7 +101,8 @@ def search_movie():
             movie_name, page)
         response = requests.get(url, headers=TMDB_HEADERS)
         return jsonify(response.json()), 200
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({"message": "Internal server error"}), 500
 
 
@@ -124,7 +116,8 @@ def recommend_movies():
             movie_id, page)
         response = requests.get(url, headers=TMDB_HEADERS)
         return jsonify(response.json()), 200
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({"message": "Internal server error"}), 500
 
 
@@ -137,7 +130,8 @@ def movie_info():
             movie_id)
         response = requests.get(url, headers=TMDB_HEADERS)
         return jsonify(response.json()), 200
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({"message": "Internal server error"}), 500
 
 
@@ -148,18 +142,17 @@ def interested_movies():
         page = request.args.get('page')
         current_user_id = get_jwt_identity()
         user = User.query.get(current_user_id)
-        genres = user.interests
-        print(genres)
+        genres = '|'.join(user.interests)
         url = url = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page={}&sort_by=popularity.desc&with_genres={}".format(page,
                                                                                                                                                                                genres)
         response = requests.get(url, headers=TMDB_HEADERS)
         return jsonify(response.json()), 200
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({"message": "Internal server error"}), 500
 
 
 with app.app_context():
-    print("----creating database----")
     db.create_all()
 
 if __name__ == '__main__':
