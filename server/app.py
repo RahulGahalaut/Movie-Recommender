@@ -35,9 +35,8 @@ TMDB_HEADERS = {
     "Authorization": "Bearer {}".format(os.environ['TMDB_AUTHORIZATION_TOKEN'])
 }
 
+
 # Register route
-
-
 @app.route('/users/register', methods=['POST'])
 def register():
     try:
